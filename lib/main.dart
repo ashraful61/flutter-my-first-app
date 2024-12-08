@@ -96,34 +96,42 @@ class HomeActivity extends StatelessWidget {
         ],
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.only(top: 16), // Add 16px padding to the top
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-              onPressed: () {
-                mySnackBar('My text button', context);
-              },
-              child: Text("My First Button"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // mySnackBar('My Elevated text button', context);
-                myAlertDialog(context);
-              },
-              child: Text("Elevated"),
-              style: buttonStyle,
-            ),
-            OutlinedButton(
-              onPressed: () {
-                mySnackBar('My Outlined text button', context);
-              },
-              child: Text("Outlined button"),
-            ),
-          ],
-        ),
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(padding: EdgeInsets.all(20),child: TextField(decoration: InputDecoration(border: OutlineInputBorder(),labelText: 'First Name')),),
+          Padding(padding: EdgeInsets.all(20),child: TextField(decoration: InputDecoration(border: OutlineInputBorder(),labelText: 'Last Name')),),
+        ],
       ),
+
+      // body: Padding(
+      //   padding: const EdgeInsets.only(top: 16), // Add 16px padding to the top
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: [
+      //       TextButton(
+      //         onPressed: () {
+      //           mySnackBar('My text button', context);
+      //         },
+      //         child: Text("My First Button"),
+      //       ),
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           // mySnackBar('My Elevated text button', context);
+      //           myAlertDialog(context);
+      //         },
+      //         child: Text("Elevated"),
+      //         style: buttonStyle,
+      //       ),
+      //       OutlinedButton(
+      //         onPressed: () {
+      //           mySnackBar('My Outlined text button', context);
+      //         },
+      //         child: Text("Outlined button"),
+      //       ),
+      //     ],
+      //   ),
+      // ),
 
       // body: Row(
       //   mainAxisAlignment: MainAxisAlignment.center,
