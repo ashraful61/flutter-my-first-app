@@ -335,8 +335,13 @@ class HomeActivity extends StatelessWidget {
         ],
       ),
 
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 10,
+        ),
         itemCount: myItems.length,
+        padding: const EdgeInsets.all(10),
         itemBuilder: (context, index) {
           return GestureDetector(
             onDoubleTap: () {
@@ -346,7 +351,7 @@ class HomeActivity extends StatelessWidget {
               mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
             },
             child: Container(
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 width: double.infinity,
                 height: 200,
                 child: Image.network(
@@ -356,6 +361,27 @@ class HomeActivity extends StatelessWidget {
           );
         },
       ),
+      // body: ListView.builder(
+      //   itemCount: myItems.length,
+      //   itemBuilder: (context, index) {
+      //     return GestureDetector(
+      //       onDoubleTap: () {
+      //         mySnackBar('double tap: ${myItems[index]['name']}', context);
+      //       },
+      //       onLongPress: () {
+      //         mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
+      //       },
+      //       child: Container(
+      //           margin: const EdgeInsets.all(10),
+      //           width: double.infinity,
+      //           height: 200,
+      //           child: Image.network(
+      //             myItems[index]['picture'] as String,
+      //             fit: BoxFit.fill,
+      //           )),
+      //     );
+      //   },
+      // ),
 
       // body: Column(
       //   mainAxisAlignment: MainAxisAlignment.start,
