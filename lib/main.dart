@@ -358,26 +358,47 @@ class HomeActivity extends StatelessWidget {
           // ),
         ),
 
-        body: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Activity1()),
-                  );
-                },
-                child: Text('Go To Activity one')),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Activity2()),
-                  );
-                },
-                child: Text('Go To Activity two')),
-          ],
+        body: Center(
+          child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100)),
+            shadowColor: const Color.fromRGBO(176, 234, 205, 1),
+            color: const Color.fromRGBO(33, 191, 115, 1),
+            elevation: 10,
+            child: const SizedBox(
+              height: 200,
+              width: 200,
+              child: Center(
+                child: Text("This is card"),
+              ),
+            ),
+          ),
         ),
+
+        // body: Column(
+        //   children: [
+        //     ElevatedButton(
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //                 builder: (context) =>
+        //                     Activity1('Dynamic activity one')),
+        //           );
+        //         },
+        //         child: Text('Go To Activity one')),
+        //     ElevatedButton(
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //                 builder: (context) =>
+        //                     Activity2('Dynamic Activity Two')),
+        //           );
+        //         },
+        //         child: Text('Go To Activity two')),
+        //   ],
+        // ),
 
         // body: TabBarView(
         //   children: [
@@ -664,18 +685,23 @@ class HomeActivity extends StatelessWidget {
 }
 
 class Activity1 extends StatelessWidget {
-  const Activity1({super.key});
+  String msg;
+  Activity1(this.msg, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Activity One'),
+        title: Text(msg),
       ),
       body: Center(
         child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Activity2()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Activity2('Dynamic activity .asdasd.. two')));
             },
             child: Text('Go to activity Two')),
       ),
@@ -684,12 +710,13 @@ class Activity1 extends StatelessWidget {
 }
 
 class Activity2 extends StatelessWidget {
-  const Activity2({super.key});
+  String msg;
+  Activity2(this.msg, {super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Activity Two'),
+        title: Text(msg),
       ),
     );
   }
