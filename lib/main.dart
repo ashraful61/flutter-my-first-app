@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'Fragment/AlarmFragment.dart';
+import 'Fragment/HomeFragment.dart';
+import 'Fragment/NotificationsFragment.dart';
+import 'Fragment/ProfileFragment.dart';
+import 'Fragment/SearchFragment.dart';
+import 'Fragment/SettingsFragment.dart';
 
 main() {
   runApp(const MyApp()); //Aplication
@@ -302,305 +308,335 @@ class HomeActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Inventory App'),
-        titleSpacing: 0,
-        centerTitle: true,
-        toolbarHeight: 60,
-        toolbarOpacity: 1,
-        elevation: 0,
-        backgroundColor: Colors.green,
-        actions: [
-          IconButton(
+    return DefaultTabController(
+      length: 6,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Demo App'),
+          titleSpacing: 0,
+          toolbarHeight: 60,
+          elevation: 0,
+          backgroundColor: Colors.green,
+          actions: [
+            IconButton(
               onPressed: () {
                 mySnackBar("This is comments", context);
               },
-              icon: const Icon(Icons.comment)),
-          IconButton(
+              icon: const Icon(Icons.comment),
+            ),
+            IconButton(
               onPressed: () {
                 mySnackBar("This is search", context);
               },
-              icon: const Icon(Icons.search)),
-          IconButton(
+              icon: const Icon(Icons.search),
+            ),
+            IconButton(
               onPressed: () {
                 mySnackBar("This is settings", context);
               },
-              icon: const Icon(Icons.settings)),
-          IconButton(
+              icon: const Icon(Icons.settings),
+            ),
+            IconButton(
               onPressed: () {
                 mySnackBar("This is email", context);
               },
-              icon: const Icon(Icons.email)),
-        ],
-      ),
-
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 10,
+              icon: const Icon(Icons.email),
+            ),
+          ],
+          bottom: const TabBar(
+            isScrollable: true,
+            indicatorPadding: EdgeInsets.zero, // Aligns the indicator
+            padding: EdgeInsets.zero, // Removes extra padding
+            tabs: [
+              Tab(icon: Icon(Icons.home), text: 'Home'),
+              Tab(icon: Icon(Icons.search), text: 'Search'),
+              Tab(icon: Icon(Icons.notifications), text: 'Notifications'),
+              Tab(icon: Icon(Icons.settings), text: 'Settings'),
+              Tab(icon: Icon(Icons.person), text: 'Profile'),
+              Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
+            ],
+          ),
         ),
-        itemCount: myItems.length,
-        padding: const EdgeInsets.all(10),
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onDoubleTap: () {
-              mySnackBar('double tap: ${myItems[index]['name']}', context);
-            },
-            onLongPress: () {
-              mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
-            },
-            child: Container(
-                margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                width: double.infinity,
-                height: 200,
-                child: Image.network(
-                  myItems[index]['picture'] as String,
-                  fit: BoxFit.fill,
-                )),
-          );
-        },
-      ),
-      // body: ListView.builder(
-      //   itemCount: myItems.length,
-      //   itemBuilder: (context, index) {
-      //     return GestureDetector(
-      //       onDoubleTap: () {
-      //         mySnackBar('double tap: ${myItems[index]['name']}', context);
-      //       },
-      //       onLongPress: () {
-      //         mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
-      //       },
-      //       child: Container(
-      //           margin: const EdgeInsets.all(10),
-      //           width: double.infinity,
-      //           height: 200,
-      //           child: Image.network(
-      //             myItems[index]['picture'] as String,
-      //             fit: BoxFit.fill,
-      //           )),
-      //     );
-      //   },
-      // ),
 
-      // body: Column(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   children: [
-      //     const Padding(
-      //         padding: EdgeInsets.all(20),
-      //         child: TextField(
-      //             decoration: InputDecoration(
-      //                 border: OutlineInputBorder(), labelText: 'First Name'))),
-      //     const Padding(
-      //         padding: EdgeInsets.all(20),
-      //         child: TextField(
-      //             decoration: InputDecoration(
-      //                 border: OutlineInputBorder(), labelText: 'Last Name'))),
-      //     const Padding(
-      //         padding: EdgeInsets.all(20),
-      //         child: TextField(
-      //             decoration: InputDecoration(
-      //                 border: OutlineInputBorder(),
-      //                 labelText: 'Email Address'))),
-      //     Padding(
-      //         padding: const EdgeInsets.all(20),
-      //         child: ElevatedButton(
-      //             onPressed: () {
-      //               mySnackBar('submit button', context);
-      //             },
-      //             style: buttonStyle,
-      //             child: const Text('Submit'))),
-      //   ],
-      // ),
-
-      // body: Padding(
-      //   padding: const EdgeInsets.only(top: 16), // Add 16px padding to the top
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: [
-      //       TextButton(
-      //         onPressed: () {
-      //           mySnackBar('My text button', context);
-      //         },
-      //         child: Text("My First Button"),
-      //       ),
-      //       ElevatedButton(
-      //         onPressed: () {
-      //           // mySnackBar('My Elevated text button', context);
-      //           myAlertDialog(context);
-      //         },
-      //         child: Text("Elevated"),
-      //         style: buttonStyle,
-      //       ),
-      //       OutlinedButton(
-      //         onPressed: () {
-      //           mySnackBar('My Outlined text button', context);
-      //         },
-      //         child: Text("Outlined button"),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-
-      // body: Row(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Container(
-      //       height: 100,
-      //       width: 100,
-      //       child: Image.network(
-      //           "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
-      //     ),
-      //     Container(
-      //       height: 100,
-      //       width: 100,
-      //       child: Image.network(
-      //           "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
-      //     ),
-      //     Container(
-      //       height: 100,
-      //       width: 100,
-      //       child: Image.network(
-      //           "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
-      //     ),
-      //   ],
-      // ),
-      // body: Container(
-      //   height: 250,
-      //   width: 250,
-      //   alignment: Alignment.center,
-      //   margin: EdgeInsets.fromLTRB(16, 34, 56, 12),
-      //   padding: EdgeInsets.all(20),
-      //   decoration: BoxDecoration(
-      //       color: Colors.blue,
-      //       border: Border.all(color: Colors.black, width: 6)),
-      //   child: Image.network(
-      //       "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
-      // ),
-      drawer: Drawer(
-        child: ListView(
+        body: TabBarView(
           children: [
-            DrawerHeader(
-                padding: EdgeInsets.all(0),
-                child: UserAccountsDrawerHeader(
-                  accountName: const Text(
-                    "Ashraful Islam",
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  accountEmail: const Text("ashraful.ru37@gmail.com"),
-                  decoration: const BoxDecoration(color: Colors.black),
-                  currentAccountPicture: ClipOval(
-                    child: Image.network(
-                      "https://as1.ftcdn.net/v2/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg",
-                      fit: BoxFit
-                          .cover, // Ensures the image covers the circular area properly
-                    ),
-                  ),
-                  onDetailsPressed: () {
-                    mySnackBar(
-                        'drawer profile click the rej  jdnds n as c', context);
-                  },
-                )),
-            ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text("Home"),
-                onTap: () {
-                  mySnackBar('Home list', context);
-                }),
-            ListTile(
-                leading: const Icon(Icons.call),
-                title: const Text("Contact"),
-                onTap: () {
-                  mySnackBar('Contact list', context);
-                }),
-            ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text("Profile"),
-                onTap: () {
-                  mySnackBar('Profile list', context);
-                }),
+            HomeFragment(),
+            SearchFragment(),
+            NotificationsFragment(),
+            SettingsFragment(),
+            ProfileFragment(),
+            AlarmFragment(),
           ],
         ),
-      ),
-      endDrawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-                padding: EdgeInsets.all(0),
-                child: UserAccountsDrawerHeader(
-                  accountName: const Text(
-                    "Ashraful Islam",
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  accountEmail: const Text("ashraful.ru37@gmail.com"),
-                  decoration: const BoxDecoration(color: Colors.black),
-                  currentAccountPicture: ClipOval(
-                    child: Image.network(
-                      "https://as1.ftcdn.net/v2/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg",
-                      fit: BoxFit
-                          .cover, // Ensures the image covers the circular area properly
+
+        // body: GridView.builder(
+        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //     crossAxisCount: 3,
+        //     crossAxisSpacing: 10,
+        //   ),
+        //   itemCount: myItems.length,
+        //   padding: const EdgeInsets.all(10),
+        //   itemBuilder: (context, index) {
+        //     return GestureDetector(
+        //       onDoubleTap: () {
+        //         mySnackBar('double tap: ${myItems[index]['name']}', context);
+        //       },
+        //       onLongPress: () {
+        //         mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
+        //       },
+        //       child: Container(
+        //           margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+        //           width: double.infinity,
+        //           height: 200,
+        //           child: Image.network(
+        //             myItems[index]['picture'] as String,
+        //             fit: BoxFit.fill,
+        //           )),
+        //     );
+        //   },
+        // ),
+        // body: ListView.builder(
+        //   itemCount: myItems.length,
+        //   itemBuilder: (context, index) {
+        //     return GestureDetector(
+        //       onDoubleTap: () {
+        //         mySnackBar('double tap: ${myItems[index]['name']}', context);
+        //       },
+        //       onLongPress: () {
+        //         mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
+        //       },
+        //       child: Container(
+        //           margin: const EdgeInsets.all(10),
+        //           width: double.infinity,
+        //           height: 200,
+        //           child: Image.network(
+        //             myItems[index]['picture'] as String,
+        //             fit: BoxFit.fill,
+        //           )),
+        //     );
+        //   },
+        // ),
+
+        // body: Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: [
+        //     const Padding(
+        //         padding: EdgeInsets.all(20),
+        //         child: TextField(
+        //             decoration: InputDecoration(
+        //                 border: OutlineInputBorder(), labelText: 'First Name'))),
+        //     const Padding(
+        //         padding: EdgeInsets.all(20),
+        //         child: TextField(
+        //             decoration: InputDecoration(
+        //                 border: OutlineInputBorder(), labelText: 'Last Name'))),
+        //     const Padding(
+        //         padding: EdgeInsets.all(20),
+        //         child: TextField(
+        //             decoration: InputDecoration(
+        //                 border: OutlineInputBorder(),
+        //                 labelText: 'Email Address'))),
+        //     Padding(
+        //         padding: const EdgeInsets.all(20),
+        //         child: ElevatedButton(
+        //             onPressed: () {
+        //               mySnackBar('submit button', context);
+        //             },
+        //             style: buttonStyle,
+        //             child: const Text('Submit'))),
+        //   ],
+        // ),
+
+        // body: Padding(
+        //   padding: const EdgeInsets.only(top: 16), // Add 16px padding to the top
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: [
+        //       TextButton(
+        //         onPressed: () {
+        //           mySnackBar('My text button', context);
+        //         },
+        //         child: Text("My First Button"),
+        //       ),
+        //       ElevatedButton(
+        //         onPressed: () {
+        //           // mySnackBar('My Elevated text button', context);
+        //           myAlertDialog(context);
+        //         },
+        //         child: Text("Elevated"),
+        //         style: buttonStyle,
+        //       ),
+        //       OutlinedButton(
+        //         onPressed: () {
+        //           mySnackBar('My Outlined text button', context);
+        //         },
+        //         child: Text("Outlined button"),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
+        // body: Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Container(
+        //       height: 100,
+        //       width: 100,
+        //       child: Image.network(
+        //           "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
+        //     ),
+        //     Container(
+        //       height: 100,
+        //       width: 100,
+        //       child: Image.network(
+        //           "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
+        //     ),
+        //     Container(
+        //       height: 100,
+        //       width: 100,
+        //       child: Image.network(
+        //           "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
+        //     ),
+        //   ],
+        // ),
+
+        // body: Container(
+        //   height: 250,
+        //   width: 250,
+        //   alignment: Alignment.center,
+        //   margin: EdgeInsets.fromLTRB(16, 34, 56, 12),
+        //   padding: EdgeInsets.all(20),
+        //   decoration: BoxDecoration(
+        //       color: Colors.blue,
+        //       border: Border.all(color: Colors.black, width: 6)),
+        //   child: Image.network(
+        //       "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/462359931_2536634103197305_2644017095845672623_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeHdAseo9FPn2wUqYDautLpmGS3EgLyxypMZLcSAvLHKkx7bSyT6vA0-zKCh-9jf6MEbKNW_VxC29ESx-ypNT0dg&_nc_ohc=y9lJQJwd8wQQ7kNvgFWm_uR&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=APrmn3U2QP6I54ZNNZMZ4uX&oh=00_AYCvHWDFDDNQRS-QYxWIery893gp0sjZEelZQozF7BA4xQ&oe=675B3658"),
+        // ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                  padding: const EdgeInsets.all(0),
+                  child: UserAccountsDrawerHeader(
+                    accountName: const Text(
+                      "Ashraful Islam",
+                      style: TextStyle(color: Colors.blue),
                     ),
-                  ),
-                  onDetailsPressed: () {
-                    mySnackBar(
-                        'drawer profile click the rej  jdnds n as c', context);
-                  },
-                )),
-            ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text("Home"),
-                onTap: () {
-                  mySnackBar('Home list', context);
-                }),
-            ListTile(
-                leading: const Icon(Icons.call),
-                title: const Text("Contact"),
-                onTap: () {
-                  mySnackBar('Contact list', context);
-                }),
-            ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text("Profile"),
-                onTap: () {
-                  mySnackBar('Profile list', context);
-                }),
-          ],
+                    accountEmail: const Text("ashraful.ru37@gmail.com"),
+                    decoration: const BoxDecoration(color: Colors.black),
+                    currentAccountPicture: ClipOval(
+                      child: Image.network(
+                        "https://as1.ftcdn.net/v2/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg",
+                        fit: BoxFit
+                            .cover, // Ensures the image covers the circular area properly
+                      ),
+                    ),
+                    onDetailsPressed: () {
+                      mySnackBar('drawer profile click the rej  jdnds n as c',
+                          context);
+                    },
+                  )),
+              ListTile(
+                  leading: const Icon(Icons.home),
+                  title: const Text("Home"),
+                  onTap: () {
+                    mySnackBar('Home list', context);
+                  }),
+              ListTile(
+                  leading: const Icon(Icons.call),
+                  title: const Text("Contact"),
+                  onTap: () {
+                    mySnackBar('Contact list', context);
+                  }),
+              ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text("Profile"),
+                  onTap: () {
+                    mySnackBar('Profile list', context);
+                  }),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // Ensure this is set for 4 items
-        currentIndex: 2,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+        endDrawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                  padding: EdgeInsets.all(0),
+                  child: UserAccountsDrawerHeader(
+                    accountName: const Text(
+                      "Ashraful Islam",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                    accountEmail: const Text("ashraful.ru37@gmail.com"),
+                    decoration: const BoxDecoration(color: Colors.black),
+                    currentAccountPicture: ClipOval(
+                      child: Image.network(
+                        "https://as1.ftcdn.net/v2/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg",
+                        fit: BoxFit
+                            .cover, // Ensures the image covers the circular area properly
+                      ),
+                    ),
+                    onDetailsPressed: () {
+                      mySnackBar('drawer profile click the rej  jdnds n as c',
+                          context);
+                    },
+                  )),
+              ListTile(
+                  leading: const Icon(Icons.home),
+                  title: const Text("Home"),
+                  onTap: () {
+                    mySnackBar('Home list', context);
+                  }),
+              ListTile(
+                  leading: const Icon(Icons.call),
+                  title: const Text("Contact"),
+                  onTap: () {
+                    mySnackBar('Contact list', context);
+                  }),
+              ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text("Profile"),
+                  onTap: () {
+                    mySnackBar('Profile list', context);
+                  }),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: "Shop",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
-          ),
-        ],
-        onTap: (int index) {
-          if (index == 0) {
-            mySnackBar('This is home', context);
-          } else if (index == 1) {
-            mySnackBar('This is shop', context);
-          } else if (index == 2) {
-            mySnackBar('This is profile', context);
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 10,
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
-        onPressed: () {
-          mySnackBar("Add button clicked", context);
-        },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed, // Ensure this is set for 4 items
+          currentIndex: 2,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shop),
+              label: "Shop",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Profile",
+            ),
+          ],
+          onTap: (int index) {
+            if (index == 0) {
+              mySnackBar('This is home', context);
+            } else if (index == 1) {
+              mySnackBar('This is shop', context);
+            } else if (index == 2) {
+              mySnackBar('This is profile', context);
+            }
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            mySnackBar("Add button clicked", context);
+          },
+        ),
       ),
     );
   }
