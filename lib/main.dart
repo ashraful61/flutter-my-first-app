@@ -5,6 +5,8 @@ import 'Fragment/NotificationsFragment.dart';
 import 'Fragment/ProfileFragment.dart';
 import 'Fragment/SearchFragment.dart';
 import 'Fragment/SettingsFragment.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // For JSON decoding
 
 main() {
   runApp(const MyApp()); //Aplication
@@ -306,6 +308,11 @@ class HomeActivity extends StatelessWidget {
     }
   ];
 
+
+fetchData () {
+
+}
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -358,47 +365,74 @@ class HomeActivity extends StatelessWidget {
           // ),
         ),
 
-        body: Center(
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100)),
-            shadowColor: const Color.fromRGBO(176, 234, 205, 1),
-            color: const Color.fromRGBO(33, 191, 115, 1),
-            elevation: 10,
-            child: const SizedBox(
-              height: 200,
-              width: 200,
-              child: Center(
-                child: Text("This is card"),
-              ),
-            ),
-          ),
-        ),
-
-        // body: Column(
-        //   children: [
-        //     ElevatedButton(
-        //         onPressed: () {
-        //           Navigator.push(
-        //             context,
-        //             MaterialPageRoute(
-        //                 builder: (context) =>
-        //                     Activity1('Dynamic activity one')),
-        //           );
-        //         },
-        //         child: Text('Go To Activity one')),
-        //     ElevatedButton(
-        //         onPressed: () {
-        //           Navigator.push(
-        //             context,
-        //             MaterialPageRoute(
-        //                 builder: (context) =>
-        //                     Activity2('Dynamic Activity Two')),
-        //           );
-        //         },
-        //         child: Text('Go To Activity two')),
-        //   ],
+        // body: GridView.builder(
+        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //     crossAxisCount: 3,
+        //     crossAxisSpacing: 10,
+        //   ),
+        //   itemCount: myItems.length,
+        //   padding: const EdgeInsets.all(10),
+        //   itemBuilder: (context, index) {
+        //     return GestureDetector(
+        //       onDoubleTap: () {
+        //         mySnackBar('double tap: ${myItems[index]['name']}', context);
+        //       },
+        //       onLongPress: () {
+        //         mySnackBar('Longpress tap: ${myItems[index]['name']}', context);
+        //       },
+        //       child: Container(
+        //           margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+        //           width: double.infinity,
+        //           height: 200,
+        //           child: Image.network(
+        //             myItems[index]['picture'] as String,
+        //             fit: BoxFit.fill,
+        //           )),
+        //     );
+        //   },
         // ),
+
+        // body: Center(
+        //   child: Card(
+        //     shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(100)),
+        //     shadowColor: const Color.fromRGBO(176, 234, 205, 1),
+        //     color: const Color.fromRGBO(33, 191, 115, 1),
+        //     elevation: 10,
+        //     child: const SizedBox(
+        //       height: 200,
+        //       width: 200,
+        //       child: Center(
+        //         child: Text("This is card"),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+
+        body: Column(
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Activity1('Dynamic activity one')),
+                  );
+                },
+                child: Text('Go To Activity one')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Activity2('Dynamic Activity Two')),
+                  );
+                },
+                child: Text('Go To Activity two')),
+          ],
+        ),
 
         // body: TabBarView(
         //   children: [
@@ -437,6 +471,7 @@ class HomeActivity extends StatelessWidget {
         //     );
         //   },
         // ),
+
         // body: ListView.builder(
         //   itemCount: myItems.length,
         //   itemBuilder: (context, index) {
@@ -709,15 +744,116 @@ class Activity1 extends StatelessWidget {
   }
 }
 
-class Activity2 extends StatelessWidget {
-  String msg;
-  Activity2(this.msg, {super.key});
+// class Activity2 extends StatelessWidget {
+
+//   String msg;
+//   Activity2(this.msg, {super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(msg),
+//       ),
+
+//               body: 
+      
+//     );
+//   }
+// }
+
+
+class Activity2 extends StatefulWidget {
+  final String msg;
+
+  const Activity2(this.msg, {Key? key}) : super(key: key);
+
+  @override
+  _Activity2State createState() => _Activity2State();
+}
+
+class _Activity2State extends State<Activity2> {
+  List<dynamic> posts = []; // To store fetched data
+  bool isLoading = true; // To handle loading state
+
+  // Fetch data from API
+  Future<void> fetchData() async {
+    final url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        setState(() {
+          posts = json.decode(response.body); // Decode and store data
+          isLoading = false; // Stop loading indicator
+        });
+      } else {
+        print('Failed to fetch data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Fetch data on initialization
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(msg),
+        title: Text(widget.msg),
       ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator()) // Show loader while fetching data
+          : GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // 3 items per row
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: posts.length,
+              padding: const EdgeInsets.all(10),
+              itemBuilder: (context, index) {
+                final post = posts[index];
+                return GestureDetector(
+                  onDoubleTap: () {
+                    print('Double-tapped on ${post['title']}');
+                  },
+                  onLongPress: () {
+                    print('Long-pressed on ${post['title']} Length:${posts.length}');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.green[100],
+                      border: Border.all(color: Colors.green, width: 1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          post['title'],
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          post['body'],
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
